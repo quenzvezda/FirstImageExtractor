@@ -23,8 +23,11 @@ namespace CopyFirstImage_v2
         {
             using (BetterFolderBrowser betterFolderBrowser = new BetterFolderBrowser())
             {
+                // Load the last folder from the settings
+                string lastFolder = Properties.Settings.Default.LastFolder;
+                betterFolderBrowser.RootFolder = string.IsNullOrEmpty(lastFolder) ? "D:\\" : lastFolder;
+
                 betterFolderBrowser.Title = "Select Folders";
-                betterFolderBrowser.RootFolder = "D:\\";
                 betterFolderBrowser.Multiselect = true;
 
                 if (betterFolderBrowser.ShowDialog() == DialogResult.OK)
@@ -79,6 +82,15 @@ namespace CopyFirstImage_v2
             }
             // Set label text to "Extract complete" and clear the listbox
             label1.Text = "Extract complete";
+
+            if (listBox1.Items.Count > 0)
+            {
+                string lastSelectedFolder = listBox1.Items[0].ToString();
+                string parentPath = Directory.GetParent(lastSelectedFolder).FullName;
+                Properties.Settings.Default.LastFolder = parentPath;
+                Properties.Settings.Default.Save();
+            }
+
             listBox1.Items.Clear();
         }
     }
