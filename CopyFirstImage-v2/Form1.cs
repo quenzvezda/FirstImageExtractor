@@ -77,6 +77,9 @@ namespace CopyFirstImage_v2
                     MessageBox.Show($"An error occurred: {ex.Message}");
                 }
             }
+            // Set label text to "Extract complete" and clear the listbox
+            label1.Text = "Extract complete";
+            listBox1.Items.Clear();
         }
     }
 }
