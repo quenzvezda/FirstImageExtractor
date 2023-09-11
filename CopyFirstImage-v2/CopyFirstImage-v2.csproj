@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{991DFB8C-77AA-4A68-8C2F-E21BB02B4552}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CopyFirstImage_v2</RootNamespace>
-    <AssemblyName>CopyFirstImage-v2</AssemblyName>
+    <RootNamespace>FirstImageExtractor</RootNamespace>
+    <AssemblyName>FirstImageExtractor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -68,6 +68,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

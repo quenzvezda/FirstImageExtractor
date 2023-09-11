@@ -24,7 +24,7 @@ namespace CopyFirstImage_v2
             using (BetterFolderBrowser betterFolderBrowser = new BetterFolderBrowser())
             {
                 // Load the last folder from the settings
-                string lastFolder = Properties.Settings.Default.LastFolder;
+                string lastFolder = FirstImageExtractor.Properties.Settings.Default.LastFolder;
                 betterFolderBrowser.RootFolder = string.IsNullOrEmpty(lastFolder) ? "D:\\" : lastFolder;
 
                 betterFolderBrowser.Title = "Select Folders";
@@ -63,7 +63,14 @@ namespace CopyFirstImage_v2
 
                 try
                 {
-                    string[] files = Directory.GetFiles(fullFolderPath, "*.jpg"); // Mengambil semua file jpg di folder
+                    // string[] files = Directory.GetFiles(fullFolderPath, "*.jpg"); // Mengambil semua file jpg di folder
+                    string[] files = Directory.GetFiles(fullFolderPath, "*.*")
+                                  .Where(file => file.ToLower().EndsWith("jpg") ||
+                                                 file.ToLower().EndsWith("png") ||
+                                                 file.ToLower().EndsWith("webp") ||
+                                                 file.ToLower().EndsWith("gif"))
+                                  .ToArray();
+
 
                     if (files.Length > 0)
                     {
@@ -80,17 +87,17 @@ namespace CopyFirstImage_v2
                     MessageBox.Show($"An error occurred: {ex.Message}");
                 }
             }
-            // Set label text to "Extract complete" and clear the listbox
-            label1.Text = "Extract complete";
 
             if (listBox1.Items.Count > 0)
             {
                 string lastSelectedFolder = listBox1.Items[0].ToString();
                 string parentPath = Directory.GetParent(lastSelectedFolder).FullName;
-                Properties.Settings.Default.LastFolder = parentPath;
-                Properties.Settings.Default.Save();
+                FirstImageExtractor.Properties.Settings.Default.LastFolder = parentPath;
+                FirstImageExtractor.Properties.Settings.Default.Save();
             }
 
+            // Set label text to "Extract complete" and clear the listbox
+            label1.Text = "Extract complete";
             listBox1.Items.Clear();
         }
     }
