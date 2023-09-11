@@ -41,6 +41,7 @@ namespace CopyFirstImage_v2
                     label1.Text = $"Selected folders: {listBox1.Items.Count}";
                 }
             }
+            listBox1.ForeColor = Color.Black;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -55,6 +56,7 @@ namespace CopyFirstImage_v2
 
         private void button2_Click(object sender, EventArgs e)
         {
+            List<string> failedFolders = new List<string>();
             // Asumsi listBoxFolders berisi path lengkap dari setiap folder yang dipilih
             foreach (var item in listBox1.Items)
             {
@@ -80,6 +82,10 @@ namespace CopyFirstImage_v2
 
                         File.Copy(firstFile, destFile, true); // Mengkopi file
                     }
+                    else
+                    {
+                        failedFolders.Add(fullFolderPath);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -88,17 +94,23 @@ namespace CopyFirstImage_v2
                 }
             }
 
-            if (listBox1.Items.Count > 0)
+            if (failedFolders.Count > 0)
             {
-                string lastSelectedFolder = listBox1.Items[0].ToString();
-                string parentPath = Directory.GetParent(lastSelectedFolder).FullName;
-                FirstImageExtractor.Properties.Settings.Default.LastFolder = parentPath;
-                FirstImageExtractor.Properties.Settings.Default.Save();
+                // Update ListBox dan Label
+                listBox1.Items.Clear();
+                listBox1.ForeColor = Color.Red;
+                foreach (var folder in failedFolders)
+                {
+                    listBox1.Items.Add($"{Path.GetFileName(folder)} (no image found in this folder)");
+                }
+                label1.Text = $"{failedFolders.Count} folders failed to extract";
             }
-
-            // Set label text to "Extract complete" and clear the listbox
-            label1.Text = "Extract complete";
-            listBox1.Items.Clear();
+            else
+            {
+                // Semua folder berhasil, kosongkan ListBox
+                listBox1.Items.Clear();
+                label1.Text = "Extract complete";
+            }
         }
     }
 }
