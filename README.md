@@ -14,7 +14,7 @@ FirstImageExtractor is a Windows Forms application designed to automate the proc
 
 1. Clone the repository:
 
-https://github.com/quenzvezda/FirstImageExtractor.git
+git clone https://github.com/quenzvezda/FirstImageExtractor.git
 
 2. Open the project in Visual Studio.
 3. Open the project in Visual Studio.
