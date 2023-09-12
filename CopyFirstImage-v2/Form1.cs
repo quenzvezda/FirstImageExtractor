@@ -39,6 +39,10 @@ namespace CopyFirstImage_v2
                         listBox1.Items.Add(folder); // Simpan path lengkap dari folder
                     }
                     label1.Text = $"Selected folders: {listBox1.Items.Count}";
+
+                    // Menyimpan folder terakhir yang diakses
+                    FirstImageExtractor.Properties.Settings.Default.LastFolder = betterFolderBrowser.RootFolder;
+                    FirstImageExtractor.Properties.Settings.Default.Save();
                 }
             }
             listBox1.ForeColor = Color.Black;
