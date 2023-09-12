@@ -66,26 +66,35 @@ namespace CopyFirstImage_v2
                 try
                 {
                     // string[] files = Directory.GetFiles(fullFolderPath, "*.jpg"); // Mengambil semua file jpg di folder
-                    string[] files = Directory.GetFiles(fullFolderPath, "*.*")
-                          .Where(file => file.ToLower().EndsWith("jpg") ||
-                                         file.ToLower().EndsWith("png") ||
-                                         file.ToLower().EndsWith("webp") ||
-                                         file.ToLower().EndsWith("gif") ||
-                                         file.ToLower().EndsWith("mp4") ||
-                                         file.ToLower().EndsWith("mkv"))
-                          .ToArray();
+                    string[] imageFiles = Directory.GetFiles(fullFolderPath, "*.*")
+                               .Where(file => file.ToLower().EndsWith("jpg") ||
+                                              file.ToLower().EndsWith("png") ||
+                                              file.ToLower().EndsWith("webp") ||
+                                              file.ToLower().EndsWith("gif"))
+                               .ToArray();
 
+                    string[] videoFiles = Directory.GetFiles(fullFolderPath, "*.*")
+                                                   .Where(file => file.ToLower().EndsWith("mp4") ||
+                                                                  file.ToLower().EndsWith("mkv"))
+                                                   .ToArray();
 
-                    if (files.Length > 0)
+                    if (imageFiles.Length > 0)
                     {
-                        Array.Sort(files); // Mengurutkan array agar file pertama adalah yang akan dikopi
-                        string firstFile = files[0];
+                        Array.Sort(imageFiles);
+                        string firstFile = imageFiles[0];
                         string destFile = Path.Combine(parentPath, Path.GetFileName(firstFile));
-
-                        File.Copy(firstFile, destFile, true); // Mengkopi file
+                        File.Copy(firstFile, destFile, true);
+                    }
+                    else if (videoFiles.Length > 0)
+                    {
+                        Array.Sort(videoFiles);
+                        string firstFile = videoFiles[0];
+                        string destFile = Path.Combine(parentPath, Path.GetFileName(firstFile));
+                        File.Copy(firstFile, destFile, true);
                     }
                     else
                     {
+                        // Tidak ada media di folder ini, tambahkan ke list gagal
                         failedFolders.Add(fullFolderPath);
                     }
                 }
