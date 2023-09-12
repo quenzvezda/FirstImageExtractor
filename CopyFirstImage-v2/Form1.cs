@@ -67,11 +67,13 @@ namespace CopyFirstImage_v2
                 {
                     // string[] files = Directory.GetFiles(fullFolderPath, "*.jpg"); // Mengambil semua file jpg di folder
                     string[] files = Directory.GetFiles(fullFolderPath, "*.*")
-                                  .Where(file => file.ToLower().EndsWith("jpg") ||
-                                                 file.ToLower().EndsWith("png") ||
-                                                 file.ToLower().EndsWith("webp") ||
-                                                 file.ToLower().EndsWith("gif"))
-                                  .ToArray();
+                          .Where(file => file.ToLower().EndsWith("jpg") ||
+                                         file.ToLower().EndsWith("png") ||
+                                         file.ToLower().EndsWith("webp") ||
+                                         file.ToLower().EndsWith("gif") ||
+                                         file.ToLower().EndsWith("mp4") ||
+                                         file.ToLower().EndsWith("mkv"))
+                          .ToArray();
 
 
                     if (files.Length > 0)
