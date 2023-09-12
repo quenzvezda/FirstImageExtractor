@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyFirstImage-v2", "CopyFirstImage-v2\CopyFirstImage-v2.csproj", "{991DFB8C-77AA-4A68-8C2F-E21BB02B4552}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstImageExtractor", "FirstImageExtractor\FirstImageExtractor.csproj", "{991DFB8C-77AA-4A68-8C2F-E21BB02B4552}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

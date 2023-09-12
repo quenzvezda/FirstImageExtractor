@@ -1,4 +1,4 @@
-﻿namespace CopyFirstImage_v2
+﻿namespace FirstImageExtractor
 {
     partial class Form1
     {

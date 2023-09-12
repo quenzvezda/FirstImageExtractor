@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using WK.Libraries.BetterFolderBrowserNS;
 using System.IO;
 
-namespace CopyFirstImage_v2
+namespace FirstImageExtractor
 {
     public partial class Form1 : Form
     {
@@ -23,26 +23,35 @@ namespace CopyFirstImage_v2
         {
             using (BetterFolderBrowser betterFolderBrowser = new BetterFolderBrowser())
             {
-                // Load the last folder from the settings
-                string lastFolder = FirstImageExtractor.Properties.Settings.Default.LastFolder;
-                betterFolderBrowser.RootFolder = string.IsNullOrEmpty(lastFolder) ? "D:\\" : lastFolder;
-
-                betterFolderBrowser.Title = "Select Folders";
-                betterFolderBrowser.Multiselect = true;
-
-                if (betterFolderBrowser.ShowDialog() == DialogResult.OK)
+                try
                 {
-                    string[] selectedFolders = betterFolderBrowser.SelectedFolders;
-                    listBox1.Items.Clear();
-                    foreach (string folder in selectedFolders)
-                    {
-                        listBox1.Items.Add(folder); // Simpan path lengkap dari folder
-                    }
-                    label1.Text = $"Selected folders: {listBox1.Items.Count}";
+                    // Load the last folder from the settings
+                    string lastFolder = Properties.Settings.Default.LastFolder;
+                    betterFolderBrowser.RootFolder = string.IsNullOrEmpty(lastFolder) ? "D:\\" : lastFolder;
 
-                    // Menyimpan folder terakhir yang diakses
-                    FirstImageExtractor.Properties.Settings.Default.LastFolder = betterFolderBrowser.RootFolder;
-                    FirstImageExtractor.Properties.Settings.Default.Save();
+                    betterFolderBrowser.Title = "Select Folders";
+                    betterFolderBrowser.Multiselect = true;
+
+                    if (betterFolderBrowser.ShowDialog() == DialogResult.OK)
+                    {
+                        string[] selectedFolders = betterFolderBrowser.SelectedFolders;
+                        listBox1.Items.Clear();
+                        foreach (string folder in selectedFolders)
+                        {
+                            listBox1.Items.Add(folder); // Simpan path lengkap dari folder
+                        }
+                        label1.Text = $"Selected folders: {listBox1.Items.Count}";
+                        // Menyimpan folder terakhir yang diakses
+                        string lastSelectedFolder = listBox1.Items[0].ToString();
+                        string parentPath = Directory.GetParent(lastSelectedFolder).FullName;
+                        Properties.Settings.Default.LastFolder = parentPath;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    // Menangani error, misalnya dengan menampilkan pesan
+                    MessageBox.Show($"An error occurred: {ex.Message}");
                 }
             }
             listBox1.ForeColor = Color.Black;
@@ -122,6 +131,10 @@ namespace CopyFirstImage_v2
             }
             else
             {
+                string lastSelectedFolder = listBox1.Items[0].ToString();
+                string parentPath = Directory.GetParent(lastSelectedFolder).FullName;
+                Properties.Settings.Default.LastFolder = parentPath;
+                Properties.Settings.Default.Save();
                 // Semua folder berhasil, kosongkan ListBox
                 listBox1.Items.Clear();
                 label1.Text = "Extract complete";

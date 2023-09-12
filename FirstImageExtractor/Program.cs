@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CopyFirstImage_v2
+namespace FirstImageExtractor
 {
     internal static class Program
     {
